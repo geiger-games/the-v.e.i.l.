@@ -6,6 +6,29 @@
     <title>The V.E.I.L.</title>
 </head>
 <body>
-    <input type="text" maxlength="50" placeholder="Search data here">
+    <input type="text" maxlength="50" placeholder="Search data here" id="inputbar"><button id="enterbtn">Enter</button>
+    <div id="output">
+        <p>Search, then get answers. First thing you do as a newbie: search "guide".</p>
+    </div>
+    <script>
+        const enter = document.getElementById("enterbtn");
+        const inp = document.getElementById("inputbar");
+        const out = document.getElementById("output");
+        enter.addEventListener("click", () => {
+            out.innerHTML = "<p>Loading...</p>";
+            fetch(`${inp.value}.html`)
+                .then(res => {
+                    if (!res.ok) {return "<p>Aw, bummer, we don't have this in the database. Maybe you misspelled something.</p>";}
+                    return res.text();
+                })
+                .then(d => {
+                    out.innerHTML = d;
+                })
+                .catch(err => {
+                    out.innerHTML = "<p>I dunno man, something bad happened while trying to get your data.</p>";
+                    console.log("File loading error:", err);
+                });
+        });
+    </script>
 </body>
 </html>
