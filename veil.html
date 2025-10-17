@@ -28,9 +28,10 @@
         const enter = document.getElementById("enterbtn");
         const inp = document.getElementById("inputbar");
         const out = document.getElementById("output");
-        enter.addEventListener("click", () => {
+
+        function load(fname) {
             out.innerHTML = "<p>Loading...</p>";
-            fetch(`${inp.value}.html`)
+            fetch(`${fname}.html`)
                 .then(res => {
                     if (!res.ok) {return "<p>Aw, bummer, we don't have this in the database. Maybe you misspelled something.</p>";}
                     return res.text();
@@ -42,6 +43,10 @@
                     out.innerHTML = "<p>I dunno man, something bad happened while trying to get your data.</p>";
                     console.log("File loading error:", err);
                 });
+        }
+
+        enter.addEventListener("click", () => {
+            load(inp.value);
         });
     </script>
 </body>
